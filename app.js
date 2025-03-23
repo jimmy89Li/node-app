@@ -3,19 +3,19 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Logger middleware.
-const logger = require('./private/logs/logger.js');
-
 // Middleware.
 app.use(express.static('public'));
+// Logger middleware.
+const logger = require('./private/logs/logger.js');
+app.use(logger);
 
 // Home page.
-app.get('/', logger, (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/_index.html'));
 });
 
 // About page.
-app.get('/about', logger, (req, res) => {
+app.get('/about', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/_about.html'));
 });
 
