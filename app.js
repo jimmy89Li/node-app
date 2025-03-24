@@ -26,6 +26,9 @@ app.get('/about', (req, res) => {
   res.sendFile(path.resolve(__dirname, './public/_about.html'));
 });
 
+// API.
+app.use('/api/people', require('./routes/people.js'));
+
 // Everything else.
 app.all('*', (req, res) => {
   res.status(404).send('Page not found');
