@@ -1,13 +1,20 @@
 const express = require('express');
+const morgan = require('morgan');
+const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3000;
 
+// Functionality.
+const loggerFile = require('./private/logs/logger.js');
+
 // Middleware.
 app.use(express.static('public'));
-// Logger middleware.
-const logger = require('./private/logs/logger.js');
-app.use(logger);
+app.use(
+  morgan('common', {
+    stream: fs.createWriteStream(loggerFile('access.log'), { flags: 'a' }),
+  })
+);
 
 // Home page.
 app.get('/', (req, res) => {
